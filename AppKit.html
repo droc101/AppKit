@@ -1,0 +1,185 @@
+<html>
+  <head>
+    <title>AppKit SDK</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+   
+    <style>
+button {
+  background-color: #fff;
+  border: 0px solid #000;
+  width: 200px;
+}
+
+button:hover {
+  background-color: #eee;
+}
+
+* {
+  font-family: Arial;
+}
+
+input {
+  width: 200px;
+}
+    </style>
+  </head>
+  <body>
+    <center>
+      <p>
+        AppKit 5.07.3 <font color="#666">Pre-Release</font> <b>By Droc101</b><br class="hideThis">
+        <input type="text" id="u" placeholder="User Name"><br class="hideThis">
+        <input type="password" id="p" placeholder="Pass Word"><br class="hideThis">
+        <button id="logIn">
+        Log In To AppKit
+        </button>
+        <p id="status" style="color: red;">
+        
+        </p>
+      </p><button id="run" style="width: 200px;" class="menu">
+Test Application
+</button><button id="publish" style="width: 200px;" class="menu">
+Generate Bookmark
+</button><button id="compile" class="menu">
+      Check Code
+      </button></center>
+<table style = "width: 100%;" id="main">
+	<tbody>
+		<tr>
+			<td style="width: 200px; background-color: #eee;" id="side"><input type="text" id="bmk" placeholder="Bookmark Code"></td>
+			<td><textarea id="html" style="width: 100%; height: 300px; resize: none;" placeholder="Application Code"></textarea></td>
+		</tr>
+	</tbody>
+</table>
+<center><button id="hide" class="menu">
+Hide Side Panel
+</button>
+<button id="show" class="menu">
+Show Side Panel
+</button>
+    </center>
+    <script>
+    var closeMessage = `
+    <html>
+    <title>Login Error</title>
+    <p>Incorrect Login Information.</p>
+    <style>
+    body {
+      font-size: 20px;
+      font-family: Arial;
+    }
+    
+    button {
+    	width: 100px;
+    }
+    </style>
+    <button onclick = "window.close();">OK</button>
+    </html>
+    `;
+    var errorMessage = `
+    <html>
+    <title>Compile Error</title>
+    <p>Code Compile Error: Remove DOUBLE QUOTES.</p>
+    <style>
+    body {
+      font-size: 20px;
+      font-family: Arial;
+    }
+    
+    button {
+    	width: 100px;
+    }
+    </style>
+    <button onclick = "window.close();">OK</button>
+    </html>
+    `;
+    var okMessage = `
+    <html>
+    <title>Compile Success</title>
+    <p>Code Compile Success! Click Generate Bookmark.</p>
+    <style>
+    body {
+      font-size: 20px;
+      font-family: Arial;
+    }
+    
+    button {
+    	width: 100px;
+    }
+    </style>
+    <button onclick = "window.close();">OK</button>
+    </html>
+    `;
+    var unusedMessage = `
+    <html>
+    <title>AppKit Auth Error</title>
+    <p></p>
+    <style>
+    body {
+      font-size: 20px;
+      font-family: Arial;
+    }
+    
+    button {
+    	width: 100px;
+    }
+    </style>
+    <button onclick = "window.close();">OK</button>
+    </html>
+    `;
+    $('#main').hide();
+    $('.menu').hide();
+      $("#run").click(function() {
+        var win = window.open("", "Title", "toolbar=no,location = no,directories=no,status = no,menubar=no,scrollbars = yes,resizable=no,width = 780,height=550,top = " + (screen.height - 550) + ",left=" + (screen.width - 840));
+        win.document.body.innerHTML = $("#html").val();
+        void 0
+      });
+      $("#publish").click(function() {
+        var bookmarkFront = 'javascript: var html = "';
+        var bookmarkMid = $("#html").val();
+        var bookmarkBack = '"; var win = window.open("", "Title", "toolbar=no,location = no,directories=no,status = no,menubar=no,scrollbars = yes,resizable=no,width = 780,height=550,top = " + (screen.height - 550) + ",left=" + (screen.width - 840)); win.document.body.innerHTML = html; void 0';
+        var final = bookmarkFront + bookmarkMid + bookmarkBack;
+        $('#bmk').val(final);
+      });
+      $("#show").click(function() {
+        	$('#side').fadeIn();
+      });
+      $("#hide").click(function() {
+        	$('#side').fadeOut();
+      });
+      $("#logIn").click(function() {
+         var userName = $('#u').val();
+         var passWord = $('#p').val();
+         if (userName === 'dev') {
+         	if (passWord === '1234') {
+          	$('#main').show();
+    				$('.menu').show();
+            $('#logIn').hide();
+            $('#u').hide();
+            $('#p').hide();
+            $('.hideThis').hide();
+            $('#status').hide();
+          }
+         }else {
+         	$('#status').text('Login Incorrect!');
+          var win = window.open("", "Title", "toolbar=no,location = no,directories=no,status = no,menubar=no,scrollbars = yes,resizable=yes,width = 400,height=125,top = " + (screen.height - 550) + ",left=" + (screen.width - 840));
+          win.document.body.innerHTML = closeMessage;
+         }
+         
+      });
+      $("#compile").click(function() {
+        	var str = $('#html').val();
+          var isInValid = str.includes('"');
+          if (isInValid === true) {
+          	//alert("Error! Replace Double Quotes With Single Quotes.")
+            var win = window.open("", "Title", "toolbar=no,location = no,directories=no,status = no,menubar=no,scrollbars = yes,resizable=yes,width = 400,height=150,top = " + (screen.height - 550) + ",left=" + (screen.width - 840));
+          win.document.body.innerHTML = errorMessage;
+          }else {
+         		//alert("Code is OK.");
+            var win = window.open("", "Title", "toolbar=no,location = no,directories=no,status = no,menubar=no,scrollbars = yes,resizable=yes,width = 400,height=150,top = " + (screen.height - 550) + ",left=" + (screen.width - 840));
+          win.document.body.innerHTML = okMessage;
+          }
+      });
+    </script>
+  </body>
+
+</html>
